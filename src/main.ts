@@ -20,27 +20,34 @@ const initApp = () => {
 
   if (header) {
     header.innerHTML = `
-      <div class="glass-panel" style="margin: 10px auto; max-width: 1200px; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 10px; z-index: 100;">
-        <h3 style="font-family: var(--font-heading); font-size: 1.8rem; font-weight: 800; letter-spacing: -1px;">
-          <a href="#/" style="text-decoration: none; color: inherit;">OP<span style="color: var(--accent-color); font-size: 0.4em; padding-left: 2px;">S</span></a>
+      <div class="glass-panel header-main">
+        <h3 class="logo">
+          <a href="#/">OP<span>S</span></a>
         </h3>
-        <nav style="display: flex; align-items: center; gap: 20px;">
-          <ul style="display: flex; gap: 30px; font-weight: 500;">
-            <li><a href="#/">Home</a></li>
-            <li><a href="#/experience">Experience</a></li>
-            <li><a href="#/skills">Skills</a></li>
-            <li><a href="#/contact">Contact</a></li>
-          </ul>
-          <div style="width: 1px; height: 24px; background: var(--border-color); margin-left: 10px;"></div>
-          <button id="theme-toggle" style="background: none; border: none; color: var(--text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 8px; border-radius: 50%; transition: color 0.3s;">
+        <div class="nav-container">
+          <nav>
+            <ul class="nav-list" id="nav-list">
+              <li><a href="#/">Home</a></li>
+              <li><a href="#/experience">Experience</a></li>
+              <li><a href="#/skills">Skills</a></li>
+              <li><a href="#/contact">Contact</a></li>
+            </ul>
+          </nav>
+          <div class="nav-divider"></div>
+          <button id="theme-toggle" class="theme-btn">
             <i class="ph ph-sun" id="theme-icon" style="font-size: 1.5rem;"></i>
           </button>
-        </nav>
+          <button class="mobile-toggle" id="mobile-toggle">
+            <i class="ph ph-list"></i>
+          </button>
+        </div>
       </div>
     `;
 
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const navList = document.getElementById('nav-list');
     
     if (localStorage.getItem('theme') === 'light') {
       document.body.classList.add('light-theme');
@@ -59,6 +66,25 @@ const initApp = () => {
         }
       });
     }
+
+    if (mobileToggle && navList) {
+      mobileToggle.addEventListener('click', () => {
+        navList.classList.toggle('active');
+        const icon = mobileToggle.querySelector('i');
+        if (icon) {
+          icon.className = navList.classList.contains('active') ? 'ph ph-x' : 'ph ph-list';
+        }
+      });
+
+      // Close menu when clicking a link
+      navList.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          navList.classList.remove('active');
+          const icon = mobileToggle.querySelector('i');
+          if (icon) icon.className = 'ph ph-list';
+        });
+      });
+    }
   }
 
   const renderRoute = () => {
@@ -67,30 +93,30 @@ const initApp = () => {
 
     if (hash === '#/') {
       routerView.innerHTML = `
-        <div style="min-height: 70vh; display: flex; flex-direction: row; justify-content: space-between; align-items: center; flex-wrap: wrap-reverse; gap: 50px; padding-top: 20px;">
-          <div style="flex: 1; min-width: 300px; max-width: 650px;">
-            <h1 style="font-size: clamp(2.5rem, 6vw, 4.8rem); font-weight: 800; margin-bottom: 1.5rem; line-height: 1.1;">
+        <div class="hero-container">
+          <div class="hero-content">
+            <h1 class="hero-title">
               ${resumeData.personal.title.split(' / ')[0]} <br>
-              <span style="color: transparent; -webkit-text-stroke: 1px var(--text-primary);">& Solution Architect</span>
+              <span>& Solution Architect</span>
             </h1>
-            <p style="color: var(--text-secondary); font-size: 1.2rem; margin-bottom: 3rem; line-height: 1.8;">
+            <p class="hero-description">
               ${resumeData.personal.summary}
             </p>
-            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-              <a href="#/experience" style="display: inline-block; padding: 16px 36px; background: var(--accent-gradient); color: #fff; font-weight: 600; border-radius: 30px; transition: transform var(--transition-fast);">Explore Experience</a>
-              <a href="#/contact" style="display: inline-block; padding: 16px 36px; border: 1px solid var(--border-color); color: var(--text-primary); font-weight: 600; border-radius: 30px; transition: background var(--transition-fast);">Get In Touch</a>
+            <div class="hero-actions">
+              <a href="#/experience" class="btn-primary">Explore Experience</a>
+              <a href="#/contact" class="btn-secondary">Get In Touch</a>
             </div>
           </div>
-          <div style="flex: 1; display: flex; justify-content: center; align-items: center; min-width: 300px;">
-            <div style="position: relative; width: 100%; max-width: 400px; aspect-ratio: 1/1; border-radius: 50%; padding: 8px; background: var(--accent-gradient); box-shadow: 0 0 50px rgba(0, 210, 255, 0.3);">
-              <img src="/profile.png" alt="${resumeData.personal.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 6px solid var(--bg-primary);">
+          <div class="hero-image-container">
+            <div class="hero-image-wrapper">
+              <img src="/profile.png" alt="${resumeData.personal.name}" class="hero-image">
             </div>
           </div>
         </div>
       `;
     } else if (hash === '#/experience') {
       const experienceHTML = resumeData.experience.map(exp => `
-        <div class="glass-panel" style="padding: 40px; border-left: 4px solid var(--accent-color); position: relative; overflow: hidden; transition: transform 0.3s ease; margin-bottom: 30px;">
+        <div class="glass-panel experience-card">
           <h3 style="font-size: 1.8rem; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
             ${exp.company}
           </h3>
