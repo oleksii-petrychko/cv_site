@@ -42,6 +42,7 @@ export const resumeData: {
   },
   skills: [
     { name: "Solution Architecture", icon: "ph-blueprint" },
+    { name: "AI Integration in SDLC", icon: "ph-brain" },
     { name: "Engineering Leadership", icon: "ph-crown" },
     { name: "Microservices & Cloud", icon: "ph-cloud" },
     { name: "Cloud Infrastructure (AWS/GCP)", icon: "ph-hard-drives" },
@@ -55,8 +56,7 @@ export const resumeData: {
     { name: "Agile & Scrum Methodologies", icon: "ph-kanban" },
     { name: "FinOps Strategy", icon: "ph-chart-line-up" },
     { name: "Budgeting & Cost Optimization", icon: "ph-piggy-bank" },
-    { name: "Team Building & Mentoring", icon: "ph-users" },
-    { name: "AI Integration in SDLC", icon: "ph-brain" }
+    { name: "Team Building & Mentoring", icon: "ph-users" }
   ],
   experience: [
     {
