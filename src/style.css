@@ -173,6 +173,7 @@ main {
   -webkit-text-stroke: 1px var(--text-primary);
 }
 
+
 .hero-description {
   color: var(--text-secondary);
   font-size: 1.2rem;
@@ -378,4 +379,42 @@ h2 {
   .skills-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+/* Statistics Badge */
+.stats-badge {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  z-index: 1000;
+  transition: all 0.3s ease;
+  cursor: default;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.stats-badge:hover {
+  border-color: var(--accent-color);
+  color: var(--text-primary);
+  transform: translateY(-5px);
+}
+
+.stats-badge i {
+  color: var(--accent-color);
+  font-size: 1rem;
+}
+
+.stats-count {
+  font-weight: 700;
+  color: var(--text-primary);
 }

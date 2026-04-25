@@ -2,6 +2,54 @@ import './style.css';
 import { resumeData } from './data/resume';
 
 let currentLang = localStorage.getItem('lang') || 'en';
+let visitCount = '...';
+
+async function fetchVisits() {
+  try {
+    // Small delay to ensure browser is ready
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const response = await fetch('https://api.counterapi.dev/v1/op-cv-site/visits/up');
+    const data = await response.json();
+    visitCount = data.count.toLocaleString();
+    
+    // Update UI if counter exists in DOM
+    updateCounterUI();
+  } catch (error) {
+    console.error('Failed to fetch visits:', error);
+    // Fallback or just show a reasonable number for demo if on localhost
+    if (window.location.hostname === 'localhost') {
+      visitCount = '1,234'; 
+    } else {
+      visitCount = '1';
+    }
+    updateCounterUI();
+  }
+}
+
+function updateCounterUI() {
+  const countEl = document.querySelector('.stats-count');
+  if (countEl) {
+    countEl.textContent = visitCount;
+  } else {
+    renderStats();
+  }
+}
+
+const renderStats = () => {
+  let statsContainer = document.getElementById('stats-container');
+  if (!statsContainer) {
+    statsContainer = document.createElement('div');
+    statsContainer.id = 'stats-container';
+    document.getElementById('app')?.appendChild(statsContainer);
+  }
+
+  statsContainer.innerHTML = `
+    <div class="stats-badge">
+      <i class="ph ph-eye"></i>
+      <span class="stats-count">${visitCount}</span>
+    </div>
+  `;
+};
 
 (window as any).copyText = (text: string, event: Event) => {
   event.preventDefault();
@@ -211,6 +259,7 @@ const renderRoute = () => {
 const renderApp = () => {
   renderHeader();
   renderRoute();
+  renderStats();
 };
 
 const initApp = () => {
@@ -219,6 +268,7 @@ const initApp = () => {
   }
 
   window.addEventListener('hashchange', renderRoute);
+  fetchVisits();
   renderApp();
 };
 
