@@ -118,4 +118,4 @@
         <br>
         <a href="#/" style="color: var(--accent-color);">${i.ui.common.goHome}</a>
       </div>
-    `},s=()=>{a(),o()};document.addEventListener(`DOMContentLoaded`,()=>{localStorage.getItem(`theme`)===`light`&&document.body.classList.add(`light-theme`),window.addEventListener(`hashchange`,o),r(),s()});
+    `},s=()=>{document.documentElement.lang=t,a(),o()};document.addEventListener(`DOMContentLoaded`,()=>{localStorage.getItem(`theme`)===`light`&&document.body.classList.add(`light-theme`),document.documentElement.lang=t,window.addEventListener(`hashchange`,o),r(),s()});
