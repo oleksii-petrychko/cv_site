@@ -241,6 +241,7 @@ const renderRoute = () => {
 };
 
 const renderApp = () => {
+  document.documentElement.lang = currentLang;
   renderHeader();
   renderRoute();
 };
@@ -249,6 +250,7 @@ const initApp = () => {
   if (localStorage.getItem('theme') === 'light') {
     document.body.classList.add('light-theme');
   }
+  document.documentElement.lang = currentLang;
 
   window.addEventListener('hashchange', renderRoute);
   fetchVisits();
