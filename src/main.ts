@@ -28,28 +28,8 @@ async function fetchVisits() {
 
 function updateCounterUI() {
   const countEl = document.querySelector('.stats-count');
-  if (countEl) {
-    countEl.textContent = visitCount;
-  } else {
-    renderStats();
-  }
+  if (countEl) countEl.textContent = visitCount;
 }
-
-const renderStats = () => {
-  let statsContainer = document.getElementById('stats-container');
-  if (!statsContainer) {
-    statsContainer = document.createElement('div');
-    statsContainer.id = 'stats-container';
-    document.getElementById('app')?.appendChild(statsContainer);
-  }
-
-  statsContainer.innerHTML = `
-    <div class="stats-badge">
-      <i class="ph ph-eye"></i>
-      <span class="stats-count">${visitCount}</span>
-    </div>
-  `;
-};
 
 (window as any).copyText = (text: string, event: Event) => {
   event.preventDefault();
@@ -241,6 +221,10 @@ const renderRoute = () => {
               LinkedIn
             </a>
           </div>
+          <div class="stats-badge">
+            <i class="ph ph-eye"></i>
+            <span class="stats-count">${visitCount}</span>
+          </div>
           <p style="color: var(--text-secondary); margin-top: 40px; font-size: 0.9rem;">© ${new Date().getFullYear()} ${data.personal.name}. ${data.ui.common.rights}</p>
         </div>
       </div>
@@ -259,7 +243,6 @@ const renderRoute = () => {
 const renderApp = () => {
   renderHeader();
   renderRoute();
-  renderStats();
 };
 
 const initApp = () => {
