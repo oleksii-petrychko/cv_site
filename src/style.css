@@ -383,6 +383,9 @@ h2 {
 
 /* Statistics Badge */
 .stats-badge {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -394,9 +397,10 @@ h2 {
   border-radius: 20px;
   font-size: 0.85rem;
   color: var(--text-secondary);
-  margin-top: 25px;
+  z-index: 1000;
   transition: all 0.3s ease;
   cursor: default;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .stats-badge:hover {
